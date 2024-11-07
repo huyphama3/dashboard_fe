@@ -12,17 +12,17 @@ const useEmployeesData = () => {
     const fetchEmployeesData = async () => {
       try {
         // Fetch dữ liệu nhân viên, tên nhân viên và dữ liệu getLa đồng thời
-        const [employeesResponse, employeeNamesResponse, employeeLaResponse] = await Promise.all([
-          axios.get("http://localhost:8080/api/v1/employees/getall"), // Lấy danh sách nhân viên
-          axios.get("http://localhost:8080/api/v1/employees/getname"), // Lấy tên nhân viên
-          axios.get("http://localhost:8080/api/v1/employees/getLa") // Lấy dữ liệu từ API getLa
-        ]);
+        const [employeesResponse, employeeNamesResponse, employeeLaResponse] =
+          await Promise.all([
+            axios.get("http://localhost:8110/api/v1/employees/getall"), // Lấy danh sách nhân viên
+            axios.get("http://localhost:8110/api/v1/employees/getname"), // Lấy tên nhân viên
+            axios.get("http://localhost:8110/api/v1/employees/getLa"), // Lấy dữ liệu từ API getLa
+          ]);
 
         // Lưu dữ liệu vào state
         setEmployees(employeesResponse.data); // Lưu danh sách nhân viên
         setEmployeeNames(employeeNamesResponse.data); // Lưu tên nhân viên
         setEmployeeLaData(employeeLaResponse.data); // Lưu dữ liệu từ API getLa
-
       } catch (error) {
         setError("Lỗi khi tải dữ liệu."); // Nếu có lỗi khi tải dữ liệu
       } finally {

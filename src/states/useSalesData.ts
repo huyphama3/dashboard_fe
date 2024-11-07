@@ -11,7 +11,9 @@ const useSalesData = () => {
     const fetchSalesData = async () => {
       try {
         setLoading(true); // Đang tải dữ liệu
-        const response = await axios.get("http://localhost:8080/api/v1/doanhso/get"); // Gọi API lấy doanh số
+        const response = await axios.get(
+          "http://localhost:8110/api/v1/doanhso/get",
+        ); // Gọi API lấy doanh số
         setSalesData(response.data.data); // Lưu dữ liệu vào state salesData
       } catch (error) {
         setError("Lỗi khi tải dữ liệu doanh số.");
