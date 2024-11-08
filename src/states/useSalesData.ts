@@ -9,10 +9,11 @@ const useSalesData = () => {
 
   useEffect(() => {
     const fetchSalesData = async () => {
+      console.log(`${process.env.NEXTAUTH_APP_API_URL}`)
       try {
         setLoading(true); // Đang tải dữ liệu
         const response = await axios.get(
-          "http://localhost:8110/api/v1/doanhso/get",
+          `${process.env.NEXTAUTH_APP_API_URL}/api/v1/doanhso/get`,
         ); // Gọi API lấy doanh số
         setSalesData(response.data.data); // Lưu dữ liệu vào state salesData
       } catch (error) {

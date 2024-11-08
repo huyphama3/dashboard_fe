@@ -14,9 +14,9 @@ const useEmployeesData = () => {
         // Fetch dữ liệu nhân viên, tên nhân viên và dữ liệu getLa đồng thời
         const [employeesResponse, employeeNamesResponse, employeeLaResponse] =
           await Promise.all([
-            axios.get("http://localhost:8110/api/v1/employees/getall"), // Lấy danh sách nhân viên
-            axios.get("http://localhost:8110/api/v1/employees/getname"), // Lấy tên nhân viên
-            axios.get("http://localhost:8110/api/v1/employees/getLa"), // Lấy dữ liệu từ API getLa
+            axios.get(`${process.env.NEXTAUTH_APP_API_URL}/api/v1/employees/getall`), // Lấy danh sách nhân viên
+            axios.get(`${process.env.NEXTAUTH_APP_API_URL}/api/v1/employees/getname`), // Lấy tên nhân viên
+            axios.get(`${process.env.NEXTAUTH_APP_API_URL}/api/v1/employees/getLa`), // Lấy dữ liệu từ API getLa
           ]);
 
         // Lưu dữ liệu vào state

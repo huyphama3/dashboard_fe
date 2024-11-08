@@ -24,7 +24,14 @@ const nextConfig = {
         port: ""
       }
     ]
+  },
+
+  reactStrictMode: true,
+  env: {
+    NEXTAUTH_APP_API_URL: process.env.NEXTAUTH_APP_API_URL,
   }
 };
+
+
 
 export default nextConfig;
