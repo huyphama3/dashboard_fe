@@ -85,11 +85,17 @@ const ChartTwo: React.FC = () => {
 
     xaxis: {
       categories: employeeNames, // Sử dụng tên nhân viên từ API
+      labels: {
+        rotate: -45, // Xoay nhãn -45 độ để tránh chồng lên nhau
+        style: {
+          fontSize: "12px", // Có thể giảm fontSize nếu cần
+        },
+      },
     },
     legend: {
       position: "top",
       horizontalAlign: "left",
-      fontFamily: "Satoshi",
+      fontFamily: "Roboto",
       fontWeight: 500,
       fontSize: "14px",
 
@@ -111,7 +117,7 @@ const ChartTwo: React.FC = () => {
       <div className="mb-4 justify-between gap-4 sm:flex">
         <div>
           <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
-            Kết quả tuần này
+            Kết quả tháng này
           </h4>
         </div>
         <div>

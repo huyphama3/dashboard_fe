@@ -25,7 +25,7 @@ const dataStatsList = [
     ),
     color: "#3FD97F",
     title: "Lợi Nhuận đề ra",
-    value: "  69,906,863 vnd",
+    value: "  32,000,000 vnd",
   },
   {
     icon: (
@@ -46,8 +46,7 @@ const dataStatsList = [
     ),
     color: "#FF9C55",
     title: "Lợi Nhuận đạt được",
-    value: " 90,906,863 vnd",
-    growthRate: 4.35,
+    value: " 4,000,000 vnd",
   },
   {
     icon: (
@@ -74,8 +73,7 @@ const dataStatsList = [
     ),
     color: "#8155FF",
     title: "Số người không đạt KPI",
-    value: "1",
-    growthRate: 0,
+    value: "3",
   },
   {
     icon: (
@@ -112,8 +110,7 @@ const dataStatsList = [
     ),
     color: "#18BFFF",
     title: "Tổng số người quản lý",
-    value: "7",
-    growthRate: 0.1,
+    value: "4",
   },
 ];
 
@@ -141,7 +138,7 @@ const DataStatsOne: React.FC<dataStats> = () => {
                 <span className="text-body-sm font-medium">{item.title}</span>
               </div>
 
-              <span
+              {/* <span
                 className={`flex items-center gap-1.5 text-body-sm font-medium ${
                   item.growthRate > 0 ? "text-green" : "text-red"
                 }`}
@@ -176,7 +173,7 @@ const DataStatsOne: React.FC<dataStats> = () => {
                     />
                   </svg>
                 )}
-              </span>
+              </span> */}
             </div>
           </div>
         ))}
