@@ -46,7 +46,7 @@ const dataStatsList = [
     ),
     color: "#FF9C55",
     title: "Lợi Nhuận đạt được",
-    value: " 4,000,000 vnd",
+    value: " 3,942,650 vnd",
   },
   {
     icon: (

@@ -7,11 +7,11 @@ const ChartOne: React.FC = () => {
   const series = [
     {
       name: "Received Amount",
-      data: [0, 20, 35, 45, 35, 55, 65, 50, 65, 75, 60, 75],
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
     {
       name: "Due Amount",
-      data: [15, 9, 17, 32, 25, 68, 80, 68, 84, 94, 74, 62],
+      data: [0, 0, 0, "2.642.650", 0, "1.300.000", 0, 0, 0, 0, 0, 0],
     },
   ];
 
@@ -98,18 +98,18 @@ const ChartOne: React.FC = () => {
     xaxis: {
       type: "category",
       categories: [
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
+        "1/11",
+        "2/11",
+        "3/11",
+        "4/11",
+        "5/11",
+        "6/11",
+        "7/11",
+        "8/11",
+        "9/11",
+        "10/11",
+        "11/11",
+        "12/11",
       ],
       axisBorder: {
         show: false,
@@ -132,7 +132,7 @@ const ChartOne: React.FC = () => {
       <div className="mb-3.5 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h4 className="text-body-2xlg font-bold text-dark dark:text-white">
-            Payments Overview
+            Thống kê so với tuần trước
           </h4>
         </div>
         <div className="flex items-center gap-2.5">
@@ -155,15 +155,15 @@ const ChartOne: React.FC = () => {
 
       <div className="flex flex-col gap-2 text-center xsm:flex-row xsm:gap-0">
         <div className="border-stroke dark:border-dark-3 xsm:w-1/2 xsm:border-r">
-          <p className="font-medium">Received Amount</p>
+          <p className="font-medium">Tuần trước</p>
           <h4 className="mt-1 text-xl font-bold text-dark dark:text-white">
-            45,070.00
+            0 vnđ
           </h4>
         </div>
         <div className="xsm:w-1/2">
-          <p className="font-medium">Due Amount</p>
+          <p className="font-medium">Hiện Tại</p>
           <h4 className="mt-1 text-xl font-bold text-dark dark:text-white">
-            $32,400.00
+            3,942,650 vnđ
           </h4>
         </div>
       </div>
