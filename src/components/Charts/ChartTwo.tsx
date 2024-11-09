@@ -85,12 +85,6 @@ const ChartTwo: React.FC = () => {
 
     xaxis: {
       categories: employeeNames, // Sử dụng tên nhân viên từ API
-      labels: {
-        rotate: -45, // Xoay nhãn -45 độ để tránh chồng lên nhau
-        style: {
-          fontSize: "12px", // Có thể giảm fontSize nếu cần
-        },
-      },
     },
     legend: {
       position: "top",

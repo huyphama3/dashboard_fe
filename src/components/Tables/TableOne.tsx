@@ -1,9 +1,9 @@
 "use client";
-import { Employee, LaData } from "@/types/employees"; // Nhập kiểu Employee từ file employees.ts
-import useEmployeesData from "@/states/useEmployeesData"; // Nhập hook lấy dữ liệu từ API
 
+import { ThongTinHopDong } from "@/types/doanhso";
+import useSalesData from "@/states/useSalesData";
 const TableOne = () => {
-  const { employeeLaData, loading, error } = useEmployeesData(); // Lấy dữ liệu từ hook
+  const { hopDongData, loading, error } = useSalesData(); // Lấy dữ liệu từ hook
 
   if (loading) return <div>Loading...</div>; // Nếu đang tải
   if (error) return <div>{error}</div>; // Nếu có lỗi
@@ -43,10 +43,10 @@ const TableOne = () => {
           </div>
         </div>
 
-        {employeeLaData.map((laData: LaData, key) => (
+        {/* {hopDongData.map((hdData: ThongTinHopDong, key) => (
           <div
             className={`grid grid-cols-3 sm:grid-cols-5 ${
-              key === employeeLaData.length - 1
+              key === hopDongData.length - 1
                 ? ""
                 : "border-b border-stroke dark:border-dark-3"
             }`}
@@ -54,35 +54,35 @@ const TableOne = () => {
           >
             <div className="flex items-center gap-3.5 px-2 py-4">
               <p className="font-medium text-dark dark:text-white">
-                {new Date(laData.ISSUE_DATE).toLocaleDateString("vi-VN")}
+                {new Date(hdData.ISSUE_DATE).toLocaleDateString("vi-VN")}
               </p>
             </div>
 
             <div className="flex items-center justify-center px-2 py-4">
               <p className="font-medium text-dark dark:text-white">
-                {laData.TOUCH_COMPANY_INFO}
+                {hdData.TOUCH_COMPANY_INFO}
               </p>
             </div>
 
             <div className="flex items-center justify-center px-2 py-4">
               <p className="font-medium text-green-light-1">
-                {laData.TOUCH_COMPANY_PHONE}
+                {hdData.TOUCH_COMPANY_PHONE}
               </p>
             </div>
 
             <div className="hidden items-center justify-center px-2 py-4 sm:flex">
               <p className="font-medium text-dark dark:text-white">
-                {laData.GPCNTT_SOLUTION_NAME}
+                {hdData.GPCNTT_SOLUTION_NAME}
               </p>
             </div>
 
             <div className="hidden items-center justify-center px-2 py-4 sm:flex">
               <p className="font-medium text-dark dark:text-white">
-                {laData.GPCNTT_CONTRACT_VALUE.toLocaleString("vi-VN")}
+                {hdData.GPCNTT_CONTRACT_VALUE.toLocaleString("vi-VN")}
               </p>
             </div>
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );

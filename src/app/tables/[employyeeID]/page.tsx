@@ -3,6 +3,8 @@ import TableOne from "@/components/Tables/TableOne";
 import TableThree from "@/components/Tables/TableThree";
 import TableTwo from "@/components/Tables/TableTwo";
 
+import { useRouter } from "next/router";
+
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
 
