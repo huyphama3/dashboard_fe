@@ -3,7 +3,7 @@
 import ChartThree from "@/components/Charts/ChartThree";
 import React from "react";
 import ChartFive from "@/components/Charts/ChartFive";
-
+import ChartFour from "@/components/Charts/ChartFour";
 const BasicChart: React.FC = () => {
   return (
     <>
@@ -11,6 +11,9 @@ const BasicChart: React.FC = () => {
         <ChartThree />
         <div className="col-span-12 xl:col-span-5">
           <ChartFive />
+        </div>
+        <div className="col-span-12 xl:col-span-12">
+          <ChartFour />
         </div>
       </div>
     </>
