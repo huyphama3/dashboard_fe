@@ -52,8 +52,8 @@ const SettingBoxes = () => {
                         type="text"
                         name="fullName"
                         id="fullName"
-                        placeholder="Devid Jhon"
-                        defaultValue="Devid Jhon"
+                        placeholder="Mobifone"
+                        defaultValue="Mobifone"
                       />
                     </div>
                   </div>
@@ -89,8 +89,8 @@ const SettingBoxes = () => {
                         type="text"
                         name="phoneNumber"
                         id="phoneNumber"
-                        placeholder="+990 3343 7865"
-                        defaultValue="+990 3343 7865"
+                        placeholder="Số điện thoại"
+                        defaultValue="0935234567"
                       />
                     </div>
                   </div>
@@ -168,8 +168,8 @@ const SettingBoxes = () => {
                       type="text"
                       name="Username"
                       id="Username"
-                      placeholder="devidjhon24"
-                      defaultValue="devidjhon24"
+                      placeholder="Tên người dùng"
+                      defaultValue="Mobifone"
                     />
                   </div>
                 </div>
