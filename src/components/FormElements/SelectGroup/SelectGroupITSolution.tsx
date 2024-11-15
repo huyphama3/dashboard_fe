@@ -2,8 +2,31 @@
 import React, { useState } from "react";
 import InputGroup from "@/components/FormElements/InputGroup";
 
-const SelectGroupIT: React.FC = () => {
+interface SelectGroupITProps {
+  onDataChange: (data: any) => void;
+}
+
+const SelectGroupIT: React.FC<SelectGroupITProps> = ({ onDataChange }) => {
   const [selectedIT, setSelectedIT] = useState<string>("");
+
+  // State cho từng trường input cụ thể dựa trên các ánh xạ đã cung cấp
+  const [formData, setFormData] = useState({
+    solutionName: "",
+    companyName: "",
+    contractRevenue: "",
+  });
+  // Hàm cập nhật để xử lý thay đổi cho từng trường input
+  const handleInputChange = (field: string, value: string) => {
+    // Cập nhật formData và gọi onDataChange để gửi dữ liệu về FormLayout
+    setFormData((prevData) => {
+      const updatedData = { ...prevData, [field]: value };
+
+      // Gửi updatedData về FormLayout qua onDataChange
+      onDataChange(updatedData);
+
+      return updatedData;
+    });
+  };
 
   return (
     <div className="mb-4.5">
@@ -30,6 +53,8 @@ const SelectGroupIT: React.FC = () => {
             placeholder="Nhập tên giải pháp"
             customClasses="mb-4"
             required
+            value={formData.solutionName}
+            onChange={(e) => handleInputChange("solutionName", e.target.value)}
           />
           <InputGroup
             label="Tên Doanh nghiệp"
@@ -37,6 +62,8 @@ const SelectGroupIT: React.FC = () => {
             placeholder="Nhập tên doanh nghiệp"
             customClasses="mb-4"
             required
+            value={formData.companyName}
+            onChange={(e) => handleInputChange("companyName", e.target.value)}
           />
           <InputGroup
             label="Giá trị hợp đồng"
@@ -44,6 +71,10 @@ const SelectGroupIT: React.FC = () => {
             placeholder="Nhập giá trị hợp đồng"
             customClasses="mb-4"
             required
+            value={formData.contractRevenue}
+            onChange={(e) =>
+              handleInputChange("contractRevenue", e.target.value)
+            }
           />
         </div>
       )}

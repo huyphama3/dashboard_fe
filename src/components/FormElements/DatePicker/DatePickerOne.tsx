@@ -2,20 +2,43 @@
 import flatpickr from "flatpickr";
 import { useEffect } from "react";
 
-const DatePickerOne = () => {
+interface DatePickerProps {
+  onFileDateChange: (date: string) => void;
+  onIssueDateChange: (date: string) => void;
+}
+
+const DatePickerOne: React.FC<DatePickerProps> = ({
+  onFileDateChange,
+  onIssueDateChange,
+}) => {
+  // Lấy ngày hiện tại và định dạng lại theo d/m/Y
+  const today = new Date();
+  const formattedDate = `${today.getDate().toString().padStart(2, "0")}/${(
+    today.getMonth() + 1
+  )
+    .toString()
+    .padStart(2, "0")}/${today.getFullYear()}`;
+
   useEffect(() => {
-    // Init flatpickr
-    flatpickr(".form-datepicker", {
+    flatpickr(".form-datepicker-filedate", {
       mode: "single",
-      static: true,
-      monthSelectorType: "static",
       dateFormat: "d/m/Y",
-      prevArrow:
-        '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M5.4 10.8l1.4-1.4-4-4 4-4L5.4 0 0 5.4z" /></svg>',
-      nextArrow:
-        '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M1.4 10.8L0 9.4l4-4-4-4L1.4 0l5.4 5.4z" /></svg>',
+      defaultDate: formattedDate, // Thiết lập ngày mặc định là ngày hiện tại
+      onChange: (selectedDates) => {
+        if (selectedDates[0])
+          onFileDateChange(selectedDates[0].toLocaleDateString("en-GB"));
+      },
     });
-  }, []);
+
+    flatpickr(".form-datepicker-issuedate", {
+      mode: "single",
+      dateFormat: "d/m/Y",
+      onChange: (selectedDates) => {
+        if (selectedDates[0])
+          onIssueDateChange(selectedDates[0].toLocaleDateString("en-GB"));
+      },
+    });
+  }, [onFileDateChange, onIssueDateChange]);
 
   return (
     <div>
@@ -24,8 +47,8 @@ const DatePickerOne = () => {
       </label>
       <div className="relative">
         <input
-          className="form-datepicker w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary"
-          placeholder="d/M/Y"
+          className="form-datepicker-filedate w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary"
+          placeholder="Chọn ngày bạn nhập hợp đồng lên hệ thống"
           data-class="flatpickr-right"
         />
 
@@ -76,8 +99,8 @@ const DatePickerOne = () => {
       </label>
       <div className="relative">
         <input
-          className="form-datepicker w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary"
-          placeholder="d/M/Y"
+          className="form-datepicker-issuedate w-full rounded-[7px] border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-dark-3 dark:bg-dark-2 dark:focus:border-primary"
+          placeholder="Chọn ngày bạn ký hợp đồng với khách hàng"
           data-class="flatpickr-right"
         />
 

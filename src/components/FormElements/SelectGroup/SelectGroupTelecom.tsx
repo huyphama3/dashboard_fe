@@ -2,9 +2,42 @@
 import React, { useState } from "react";
 import InputGroup from "@/components/FormElements/InputGroup";
 
-const SelectGroupTelecom: React.FC = () => {
+interface SelectGroupTelecomProps {
+  onDataChange: (data: any) => void;
+}
+
+const SelectGroupTelecom: React.FC<SelectGroupTelecomProps> = ({
+  onDataChange,
+}) => {
   const [selectedTelecom, setSelectedTelecom] = useState<string>("");
 
+  // State cho từng trường input cụ thể dựa trên các ánh xạ đã cung cấp
+  const [formData, setFormData] = useState({
+    fiberCode: "",
+    fiberCompanyName: "",
+    fiberRevenue: "",
+    prepaidPhoneNumber: "",
+    prepaidSubscriptionPackage: "",
+    prepaidRevenue: "",
+    postpaidPhoneNumber: "",
+    postpaidSubscriptionPackage: "",
+    postpaidRevenue: "",
+    otherServiceName: "",
+    otherServiceRevenue: "",
+  });
+
+  // Hàm cập nhật để xử lý thay đổi cho từng trường input
+  const handleInputChange = (field: string, value: string) => {
+    // Cập nhật formData và gọi onDataChange để gửi dữ liệu về FormLayout
+    setFormData((prevData) => {
+      const updatedData = { ...prevData, [field]: value };
+
+      // Gửi updatedData về FormLayout qua onDataChange
+      onDataChange(updatedData);
+
+      return updatedData;
+    });
+  };
   return (
     <div className="mb-4.5">
       <label className="mb-3 block text-body-sm text-dark dark:text-white">
@@ -33,66 +66,100 @@ const SelectGroupTelecom: React.FC = () => {
       {selectedTelecom === "MobiFiber" && (
         <div>
           <InputGroup
-            label="Gói cước"
+            label="Gói cước Fiber"
             type="text"
             placeholder="Nhập gói cước"
             customClasses="mb-4"
+            value={formData.fiberCode}
+            onChange={(e) => handleInputChange("fiberCode", e.target.value)}
           />
           <InputGroup
-            label="Tên Doanh Nghiệp"
+            label="Tên Doanh Nghiệp Fiber"
             type="text"
             placeholder="Tên Doanh Nghiệp"
             customClasses="mb-4"
+            value={formData.fiberCompanyName}
+            onChange={(e) =>
+              handleInputChange("fiberCompanyName", e.target.value)
+            }
           />
           <InputGroup
-            label="Giá Trị Hợp Đồng"
+            label="Giá Trị Hợp Đồng Fiber"
             type="text"
             placeholder="Giá Trị Hợp Đồng"
             customClasses="mb-4"
+            value={formData.fiberRevenue}
+            onChange={(e) => handleInputChange("fiberRevenue", e.target.value)}
           />
         </div>
       )}
       {selectedTelecom === "NewSubscriptionBefore" && (
         <div>
           <InputGroup
-            label="Số thuê bao"
+            label="Số thuê bao Trả Trước"
             type="text"
             placeholder="Số thuê bao"
             customClasses="mb-4"
+            value={formData.prepaidPhoneNumber}
+            onChange={(e) =>
+              handleInputChange("prepaidPhoneNumber", e.target.value)
+            }
           />
           <InputGroup
-            label="Gói cước đăng ký"
+            label="Gói cước đăng ký Trả Trước"
             type="text"
             placeholder="Gói cước đăng ký"
             customClasses="mb-4"
+            value={formData.prepaidSubscriptionPackage}
+            onChange={(e) =>
+              handleInputChange("prepaidSubscriptionPackage", e.target.value)
+            }
           />
           <InputGroup
-            label="Doanh thu gói cước"
+            label="Doanh thu gói cước Trả Trước"
             type="text"
             placeholder="Doanh thu gói cước"
             customClasses="mb-4"
+            value={formData.prepaidRevenue}
+            onChange={(e) =>
+              handleInputChange("prepaidRevenue", e.target.value)
+            }
           />
         </div>
       )}
       {selectedTelecom === "NewSubscriptionAfter" && (
         <div>
           <InputGroup
-            label="Số thuê bao"
+            label="Số thuê bao Trả Sau"
             type="text"
             placeholder="Số thuê bao"
             customClasses="mb-4"
+            value={formData.postpaidPhoneNumber}
+            onChange={(e) =>
+              handleInputChange("postpaidPhoneNumber", e.target.value)
+            }
           />
+
           <InputGroup
-            label="Gói cước đăng ký"
+            label="Gói cước đăng ký Trả Sau"
             type="text"
             placeholder="Gói cước đăng ký"
             customClasses="mb-4"
+            value={formData.postpaidSubscriptionPackage}
+            onChange={(e) =>
+              handleInputChange("postpaidSubscriptionPackage", e.target.value)
+            }
           />
+
           <InputGroup
-            label="Doanh thu gói cước"
+            label="Doanh thu gói cước Trả Sau"
             type="text"
             placeholder="Doanh thu gói cước"
             customClasses="mb-4"
+            value={formData.postpaidRevenue}
+            onChange={(e) =>
+              handleInputChange("postpaidRevenue", e.target.value)
+            }
           />
         </div>
       )}
@@ -103,12 +170,20 @@ const SelectGroupTelecom: React.FC = () => {
             type="text"
             placeholder="Tên dịch vụ"
             customClasses="mb-4"
+            value={formData.otherServiceName}
+            onChange={(e) =>
+              handleInputChange("otherServiceName", e.target.value)
+            }
           />
           <InputGroup
             label="Doanh thu mang lại"
             type="text"
             placeholder="Doanh thu mang lại"
             customClasses="mb-4"
+            value={formData.otherServiceRevenue}
+            onChange={(e) =>
+              handleInputChange("otherServiceRevenue", e.target.value)
+            }
           />
         </div>
       )}
