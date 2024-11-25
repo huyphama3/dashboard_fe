@@ -4,8 +4,7 @@ import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import React from "react";
 
 export const metadata: Metadata = {
-  title:
-    "MOBIFONE DASHBOARD",
+  title: "MOBIFONE DASHBOARD",
   description: "This is Next.js Home page for NextAdmin Dashboard Kit",
 };
 

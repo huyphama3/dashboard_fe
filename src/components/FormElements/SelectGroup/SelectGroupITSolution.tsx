@@ -14,6 +14,8 @@ const SelectGroupIT: React.FC<SelectGroupITProps> = ({ onDataChange }) => {
     solutionName: "",
     companyName: "",
     contractRevenue: "",
+    otherServiceName: "",
+    otherServiceRevenue: "",
   });
   // Hàm cập nhật để xử lý thay đổi cho từng trường input
   const handleInputChange = (field: string, value: string) => {
@@ -43,6 +45,7 @@ const SelectGroupIT: React.FC<SelectGroupITProps> = ({ onDataChange }) => {
           Chọn Lựa Chọn
         </option>
         <option value="ContractType">Hợp đồng Giải pháp GPS/NTS/HTS</option>
+        <option value="OtherRevenue">Doanh thu khác (Cloud, Camera...)</option>
       </select>
 
       {selectedIT === "ContractType" && (
@@ -74,6 +77,30 @@ const SelectGroupIT: React.FC<SelectGroupITProps> = ({ onDataChange }) => {
             value={formData.contractRevenue}
             onChange={(e) =>
               handleInputChange("contractRevenue", e.target.value)
+            }
+          />
+        </div>
+      )}
+      {selectedIT === "OtherRevenue" && (
+        <div>
+          <InputGroup
+            label="Tên dịch vụ"
+            type="text"
+            placeholder="Tên dịch vụ"
+            customClasses="mb-4"
+            value={formData.otherServiceName}
+            onChange={(e) =>
+              handleInputChange("otherServiceName", e.target.value)
+            }
+          />
+          <InputGroup
+            label="Doanh thu mang lại"
+            type="text"
+            placeholder="Doanh thu mang lại"
+            customClasses="mb-4"
+            value={formData.otherServiceRevenue}
+            onChange={(e) =>
+              handleInputChange("otherServiceRevenue", e.target.value)
             }
           />
         </div>

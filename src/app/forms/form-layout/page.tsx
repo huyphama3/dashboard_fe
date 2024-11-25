@@ -4,11 +4,11 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import SelectGroupOne from "@/components/FormElements/SelectGroup/SelectGroupOne";
 import InputGroup from "@/components/FormElements/InputGroup";
+import SelectGroupName from "@/components/FormElements/SelectGroup/SelectGroupName";
 import DatePickerOne from "@/components/FormElements/DatePicker/DatePickerOne";
 import SelectGroupTelecom from "@/components/FormElements/SelectGroup/SelectGroupTelecom";
 import SelectGroupIT from "@/components/FormElements/SelectGroup/SelectGroupITSolution";
-import { InputGroupProps } from "@/types/inputGroup";
-
+import SelectGroupDonVi from "@/components/FormElements/SelectGroup/SelectGroupDonVi";
 const FormLayout = () => {
   const [category, setCategory] = useState<string>("");
   const [fileDate, setFileDate] = useState<string>(""); // Dữ liệu ngày nhập hợp đồng
@@ -20,6 +20,27 @@ const FormLayout = () => {
   // State để lưu dữ liệu từ các trường trong SelectGroupTelecom và SelectGroupIT
   const [telecomData, setTelecomData] = useState({});
   const [itData, setItData] = useState({});
+
+  // State để lưu giá trị đã chọn cho Telecom và IT
+  const [selectedTelecom, setSelectedTelecom] = useState<string | null>(null);
+  const [selectedIT, setSelectedIT] = useState<string | null>(null);
+
+  const [formData, setFormData] = useState({
+    fiberCode: "",
+    fiberCompanyName: "",
+    fiberRevenue: "",
+    prepaidPhoneNumber: "",
+    prepaidSubscriptionPackage: "",
+    prepaidRevenue: "",
+    postpaidPhoneNumber: "",
+    postpaidSubscriptionPackage: "",
+    postpaidRevenue: "",
+    otherServiceName: "",
+    otherServiceRevenue: "",
+    solutionName: "",
+    companyName: "",
+    contractRevenue: "",
+  });
 
   const handleCategoryChange = (value: string) => {
     setCategory(value);
@@ -33,6 +54,7 @@ const FormLayout = () => {
   const handleITDataChange = (data: any) => {
     setItData(data);
   };
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +74,7 @@ const FormLayout = () => {
       ...(category === "IT_Solution" ? itData : {}),
       // Các dữ liệu khác cần gửi
     };
-
+    setLoading(true); // Bắt đầu gửi dữ liệu
     try {
       const response = await fetch(
         "http://localhost:8110/api/v1/submit/guidulieu",
@@ -77,13 +99,38 @@ const FormLayout = () => {
         setEmpEmail("");
         setTelecomData({});
         setItData({});
+        setCategory(""); // Reset category
+
+        // Reset các trường trong SelectGroupTelecom
+        setSelectedTelecom(null); // Reset giá trị đã chọn trong SelectGroupTelecom
+        setFormData({
+          fiberCode: "",
+          fiberCompanyName: "",
+          fiberRevenue: "",
+          prepaidPhoneNumber: "",
+          prepaidSubscriptionPackage: "",
+          prepaidRevenue: "",
+          postpaidPhoneNumber: "",
+          postpaidSubscriptionPackage: "",
+          postpaidRevenue: "",
+          otherServiceName: "",
+          otherServiceRevenue: "",
+          solutionName: "",
+          companyName: "",
+          contractRevenue: "",
+        }); // Reset formData trong SelectGroupTelecom và SelectGroupIT
+
+        // Reset các trường trong SelectGroupIT
+        setSelectedIT(null); // Reset giá trị đã chọn trong SelectGroupIT
       } else {
         alert("Lỗi khi gửi dữ liệu: " + (result?.msg || "Có lỗi xảy ra"));
       }
     } catch (error) {
       console.error("Lỗi khi gửi dữ liệu:", error);
       alert("Đã xảy ra lỗi khi gửi dữ liệu.");
-    }
+    } finally {
+      setLoading(true);
+    } // Dừng trạng thái loading khi đã có phản hồi
   };
 
   return (
@@ -107,25 +154,48 @@ const FormLayout = () => {
                   />
                 </div>
                 <div className="mb-4.5 flex flex-col gap-4.5">
-                  <InputGroup
+                  <SelectGroupName
                     label="Họ Tên"
-                    type="text"
-                    placeholder="Họ và tên"
-                    customClasses="w-full xl:w-2/2"
-                    required
+                    options={[
+                      {
+                        value: "Vũ Hoàng Tuyết Nhung",
+                        label: "Vũ Hoàng Tuyết Nhung",
+                      },
+                      { value: "Phùng Vĩnh Duy", label: "Phùng Vĩnh Duy" },
+                      {
+                        value: "Huỳnh Thị Lệ Trinh",
+                        label: "Huỳnh Thị Lệ Trinh",
+                      },
+                      { value: "Bùi Đức Hoàng", label: "Bùi Đức Hoàng" },
+                      {
+                        value: "Nguyễn Thị Thúy Quỳnh",
+                        label: "Nguyễn Thị Thúy Quỳnh",
+                      },
+                      {
+                        value: "Nguyễn Trung Vương",
+                        label: "Nguyễn Trung Vương",
+                      },
+                      { value: "Đậu Quang Cường", label: "Đậu Quang Cường" },
+                      { value: "Bùi Trọng La", label: "Bùi Trọng La" },
+                    ]}
                     value={empName}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                       setEmpName(e.target.value)
                     }
                   />
-                  <InputGroup
-                    label="Đơn vị"
-                    type="text"
-                    placeholder="Đơn vị bạn đang công tác"
-                    customClasses="w-full xl:w-2/2"
-                    required
+                  <SelectGroupDonVi
+                    label="Đơn Vị"
+                    options={[
+                      { value: "DLA", label: "DLA" },
+                      { value: "DNO", label: "DNO" },
+                      { value: "KON", label: "KON" },
+                      { value: "GLA", label: "GLA" },
+                      { value: "PYE", label: "PYE" },
+                      { value: "KHO", label: "KHO" },
+                      { value: "CNs", label: "CNs" },
+                    ]}
                     value={donVi}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                       setDonVi(e.target.value)
                     }
                   />

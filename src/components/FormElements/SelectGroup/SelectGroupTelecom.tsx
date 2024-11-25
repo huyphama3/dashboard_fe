@@ -22,8 +22,6 @@ const SelectGroupTelecom: React.FC<SelectGroupTelecomProps> = ({
     postpaidPhoneNumber: "",
     postpaidSubscriptionPackage: "",
     postpaidRevenue: "",
-    otherServiceName: "",
-    otherServiceRevenue: "",
   });
 
   // Hàm cập nhật để xử lý thay đổi cho từng trường input
@@ -59,7 +57,6 @@ const SelectGroupTelecom: React.FC<SelectGroupTelecomProps> = ({
         <option value="NewSubscriptionAfter">
           Thuê bao viễn thông Phát triển mới (Trả Sau)
         </option>
-        <option value="OtherRevenue">Doanh thu khác (Cloud, Camera...)</option>
       </select>
 
       {/* Display additional fields based on selection */}
@@ -159,30 +156,6 @@ const SelectGroupTelecom: React.FC<SelectGroupTelecomProps> = ({
             value={formData.postpaidRevenue}
             onChange={(e) =>
               handleInputChange("postpaidRevenue", e.target.value)
-            }
-          />
-        </div>
-      )}
-      {selectedTelecom === "OtherRevenue" && (
-        <div>
-          <InputGroup
-            label="Tên dịch vụ"
-            type="text"
-            placeholder="Tên dịch vụ"
-            customClasses="mb-4"
-            value={formData.otherServiceName}
-            onChange={(e) =>
-              handleInputChange("otherServiceName", e.target.value)
-            }
-          />
-          <InputGroup
-            label="Doanh thu mang lại"
-            type="text"
-            placeholder="Doanh thu mang lại"
-            customClasses="mb-4"
-            value={formData.otherServiceRevenue}
-            onChange={(e) =>
-              handleInputChange("otherServiceRevenue", e.target.value)
             }
           />
         </div>
