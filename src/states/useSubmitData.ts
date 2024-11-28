@@ -1,13 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
-import { SubmitSale } from "../types/submitSale"; // Import interface SubmitSale
+import { SubmitData } from "../types/submitData"; // Import interface SubmitData
 
 const useSubmitData = () => {
   const [loading, setLoading] = useState<boolean>(false); // Trạng thái loading
   const [error, setError] = useState<string | null>(null); // Trạng thái lỗi
   const [success, setSuccess] = useState<boolean>(false); // Trạng thái thành công
 
-  const submitData = async (data: SubmitSale) => {
+  const submitData = async (data: SubmitData) => {
     setLoading(true); // Bắt đầu tải
     setError(null); // Xóa lỗi cũ
     setSuccess(false); // Đặt trạng thái thành công là false

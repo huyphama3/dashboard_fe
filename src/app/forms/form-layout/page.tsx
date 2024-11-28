@@ -9,6 +9,7 @@ import DatePickerOne from "@/components/FormElements/DatePicker/DatePickerOne";
 import SelectGroupTelecom from "@/components/FormElements/SelectGroup/SelectGroupTelecom";
 import SelectGroupIT from "@/components/FormElements/SelectGroup/SelectGroupITSolution";
 import SelectGroupDonVi from "@/components/FormElements/SelectGroup/SelectGroupDonVi";
+
 const FormLayout = () => {
   const [category, setCategory] = useState<string>("");
   const [fileDate, setFileDate] = useState<string>(""); // Dữ liệu ngày nhập hợp đồng
@@ -61,7 +62,7 @@ const FormLayout = () => {
 
     // Kiểm tra nếu các trường bắt buộc chưa được điền
     if (!empName || !empEmail || !donVi) {
-      alert("Vui lòng điền đầy đủ thông tin Họ Tên, Đơn Vị, và Email.");
+      alert("Vui lòng điền đầy đủ thông tin Họ Tên, Đơn Vị, và Email!");
       return;
     }
     const data = {
@@ -123,7 +124,7 @@ const FormLayout = () => {
         // Reset các trường trong SelectGroupIT
         setSelectedIT(null); // Reset giá trị đã chọn trong SelectGroupIT
       } else {
-        alert("Lỗi khi gửi dữ liệu: " + (result?.msg || "Có lỗi xảy ra"));
+        alert("Lỗi khi gửi dữ liệu: " + (result?.msg || "Có lỗi xảy ra!"));
       }
     } catch (error) {
       console.error("Lỗi khi gửi dữ liệu:", error);
