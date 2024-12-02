@@ -9,7 +9,7 @@ export default function SigninWithPassword() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     e.preventDefault();
 
     try {
@@ -48,7 +48,7 @@ export default function SigninWithPassword() {
         </label>
         <div className="relative">
           <input
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
             className="w-full rounded-lg border border-stroke bg-transparent py-[15px] pl-6 pr-11 font-medium text-dark outline-none focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
             type="text"
             placeholder="Email"
@@ -131,11 +131,6 @@ export default function SigninWithPassword() {
         >
           Sign In
         </button>
-        {error && (
-          <div className="mt-2 w-fit rounded-md bg-red-500 px-3 py-1 text-sm text-white">
-            {error}
-          </div>
-        )}
       </div>
     </form>
   );

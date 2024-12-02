@@ -14,7 +14,7 @@ const useSubmitData = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXTAUTH_APP_API_URL}/api/v1/submit/guidulieu`, // API endpoint mà bạn đã cung cấp
+        `${process.env.NEXTAUTH_URL}/api/v1/submit/guidulieu`, // API endpoint mà bạn đã cung cấp
         data, // Dữ liệu sẽ được gửi
       );
 
