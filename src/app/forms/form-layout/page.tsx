@@ -78,7 +78,7 @@ const FormLayout = () => {
     setLoading(true); // Bắt đầu gửi dữ liệu
     try {
       const response = await fetch(
-        "http://localhost:8110/api/v1/submit/guidulieu",
+        `${process.env.NEXTAUTH_APP_API_URL}/api/v1/submit/guidulieu`,
         {
           method: "POST",
           headers: {
@@ -91,6 +91,7 @@ const FormLayout = () => {
       const result = await response.json();
       if (response.ok) {
         alert("Dữ liệu đã được gửi thành công!");
+        console.log("Thông tin đã gửi:", data); // In ra console những gì đã được gửi đi
 
         // Reset tất cả state sau khi gửi thành công
         setFileDate("");
@@ -129,6 +130,7 @@ const FormLayout = () => {
     } catch (error) {
       console.error("Lỗi khi gửi dữ liệu:", error);
       alert("Đã xảy ra lỗi khi gửi dữ liệu.");
+      console.log("Thông tin đã gửi:", data); // In ra console những gì đã được gửi đi
     } finally {
       setLoading(true);
     } // Dừng trạng thái loading khi đã có phản hồi

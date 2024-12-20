@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { error } from "console";
 
 export default function SigninWithPassword() {
   const [username, setUsername] = useState("");
@@ -10,11 +11,11 @@ export default function SigninWithPassword() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async () => {
-    e.preventDefault();
+    // error.preventDefault();
 
     try {
       // Gửi thông tin đăng nhập tới API
-      const response = await fetch("http://localhost:8110/api/v1/auth/", {
+      const response = await fetch("/api/v1/auth/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

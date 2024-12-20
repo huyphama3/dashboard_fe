@@ -123,17 +123,7 @@ const ProfileBox = () => {
               <h4 className="font-medium text-dark dark:text-white">
                 About Me
               </h4>
-              <p className="mt-4">
-                In 1993, MobiFone was founded as Vietnam's first mobile
-                telecommunications network. MobiFone is the first mobile
-                information network provider in Vietnam and one of the major
-                telecommunications, IT, and digital content enterprises in the
-                country, holding a market share of more than 30 percent.
-                MobiFone's mission is to establish a comprehensive digital
-                ecosystem that helps customers with all of their digital needs,
-                unleashes all of their digital potential, and guides them
-                towards a digital future.
-              </p>
+              <p className="mt-4"></p>
             </div>
 
             <div className="mt-4.5">

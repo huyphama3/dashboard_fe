@@ -144,12 +144,7 @@ const ChartOne: React.FC = () => {
       </div>
       <div>
         <div className="-ml-4 -mr-5">
-          <ReactApexChart
-            options={options}
-            series={series}
-            type="area"
-            height={310}
-          />
+          <ReactApexChart options={options} type="area" height={310} />
         </div>
       </div>
 

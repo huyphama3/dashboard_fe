@@ -11,14 +11,14 @@ import ChartOne from "@/components/Charts/ChartOne";
 const ECommerce: React.FC = () => {
   return (
     <>
-      <DataStatsOne />
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-9 2xl:gap-7.5">
-        <ChartOne />
-        <ChartTwo />
-        <div className="col-span-12 xl:col-span-7">
-          <TableOne />
-        </div>
-        <ChartThree />
+      <div className="flex h-screen w-full items-center justify-center">
+        <iframe
+          title="Bao_cao_thu_viec"
+          width="100%"
+          height="97%"
+          src="https://app.powerbi.com/view?r=eyJrIjoiMDJiMjE4NzMtOWZhMi00OWUwLTlmMWYtNjMyOGZjZGRlYTk3IiwidCI6ImYzYWNiMTYyLWEyNjctNDVhMi1iOTVlLThiOTdmYWU5MTI1ZiIsImMiOjEwfQ%3D%3D"
+          allowFullScreen
+        ></iframe>
       </div>
     </>
   );

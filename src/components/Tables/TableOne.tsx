@@ -3,11 +3,6 @@
 import { ThongTinHopDong } from "@/types/doanhso";
 import useSalesData from "@/states/useSalesData";
 const TableOne = () => {
-  const { hopDongData, loading, error } = useSalesData(); // Lấy dữ liệu từ hook
-
-  if (loading) return <div>Loading...</div>; // Nếu đang tải
-  if (error) return <div>{error}</div>; // Nếu có lỗi
-
   return (
     <div className="rounded-[10px] bg-white px-7.5 pb-4 pt-7.5 shadow-1 dark:bg-gray-dark dark:shadow-card">
       <h4 className="mb-5.5 text-body-2xlg font-bold text-dark dark:text-white">
