@@ -1,42 +1,88 @@
 "use client";
-import React, { useState } from "react";
-import Link from "next/link";
+import React, { useState, FormEvent, ChangeEvent } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export default function SigninWithPassword() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [typePassword, setTypePassword] = useState("password");
-  const router = useRouter();
+const API_URL = process.env.NEXTAUTH_APP_API_URL; // Đảm bảo rằng bạn đang sử dụng đúng URL API của bạn
+export const LOGIN_URL = `${API_URL}/auth`; // Cập nhật URL đăng nhập
 
-  const handleLogin = async (e: React.FormEvent) => {
+export default function SigninWithPassword() {
+  const [typePassword, setTypePassword] = useState<string>("password");
+  const [password, setPassword] = useState<string>("");
+  const [loginTitle, setLoginTitle] = useState<string>(
+    "Chào mừng bạn đến với MobiFone",
+  );
+  const [email, setEmail] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [errorEmail, setErrorEmail] = useState<string>("");
+
+  const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // Hàm kiểm tra định dạng email
+  function checkIfEmailInString(text: string): boolean {
+    var re =
+      /(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
+    return re.test(text);
+  }
+
+  // Xử lý form khi người dùng submit
+  const handleSubmit = async (e: FormEvent) => {
+    setLoading(true);
     e.preventDefault();
-    setError(""); // Reset lỗi trước khi gửi yêu cầu
+    console.log("check login", email, password);
+
+    let newStringEmail = email;
+    if (!checkIfEmailInString(email)) {
+      newStringEmail = email + "@mobifone.vn"; // Thêm domain nếu người dùng chỉ nhập email mà không có domain
+    }
 
     try {
-      const response = await fetch(`${process.env.NEXTAUTH_APP_API_URL}/auth`, {
+      // Gửi request đăng nhập
+      const result = await fetch(LOGIN_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: newStringEmail,
+          password,
+        }),
       });
 
-      if (response.ok) {
-        router.push("/"); // Điều hướng về trang chủ khi thành công
+      if (!result.ok) {
+        setError("Invalid credentials");
+        setLoading(false);
+        return;
       } else {
-        const errorData = await response.json();
-        setError(errorData.message || "Đăng nhập thất bại!");
+        const user = await result.json();
+        console.log("user", user);
+
+        // Đăng nhập với next-auth
+        await signIn("credentials", {
+          username: newStringEmail,
+          password,
+          redirect: false, // Điều hướng tùy chỉnh
+        });
+
+        setLoading(false);
+        router.replace("/"); // Điều hướng về trang chủ sau khi đăng nhập thành công
+        router.refresh(); // Refresh lại trang để lấy thông tin người dùng mới
       }
-    } catch (err) {
-      setError("Có lỗi xảy ra khi kết nối tới server.");
+    } catch (error) {
+      setError("Invalid credentials");
+      setLoading(false);
     }
   };
-  const handleShowPass = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTypePassword(e.target.checked ? "text" : "password");
+
+  // Hiển thị mật khẩu
+  const handleShowPass = (e: ChangeEvent<HTMLInputElement>) => {
+    let isChecked = e.target.checked;
+    setTypePassword(isChecked ? "text" : "password");
   };
+
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleSubmit}>
       <div className="mb-4">
         <label
           htmlFor="email"
@@ -46,10 +92,10 @@ export default function SigninWithPassword() {
         </label>
         <div className="relative">
           <input
-            id="username"
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full rounded-lg border border-stroke bg-transparent py-[15px] pl-6 pr-11 font-medium text-dark outline-none focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
             placeholder="Email"
           />
@@ -132,21 +178,16 @@ export default function SigninWithPassword() {
             Show password
           </label>
         </div>
-        <Link
-          href="/auth/forgot-password"
-          className="select-none font-roboto text-base font-medium text-dark underline duration-300 hover:text-primary dark:text-white dark:hover:text-primary"
-        >
-          Forgot Password?
-        </Link>
       </div>
 
       {error && <p className="text-sm text-red-500">{error}</p>}
       <div className="mb-4.5">
         <button
           type="submit"
+          disabled={loading}
           className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary p-4 font-medium text-white transition hover:bg-opacity-90"
         >
-          Sign In
+          {loading ? "Đang đăng nhập..." : "Đăng nhập"}
         </button>
       </div>
     </form>

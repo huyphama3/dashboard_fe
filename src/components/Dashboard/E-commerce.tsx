@@ -16,7 +16,7 @@ const ECommerce: React.FC = () => {
           title="Bao_cao_thu_viec"
           width="100%"
           height="100%"
-          src="https://app.powerbi.com/view?r=eyJrIjoiMDJiMjE4NzMtOWZhMi00OWUwLTlmMWYtNjMyOGZjZGRlYTk3IiwidCI6ImYzYWNiMTYyLWEyNjctNDVhMi1iOTVlLThiOTdmYWU5MTI1ZiIsImMiOjEwfQ%3D%3D"
+          src="https://app.powerbi.com/view?r=eyJrIjoiOWI2Nzg0MDAtNzA0NC00YTI2LTg1Y2MtZjJiNzc5MmFiNGQ2IiwidCI6ImYzYWNiMTYyLWEyNjctNDVhMi1iOTVlLThiOTdmYWU5MTI1ZiIsImMiOjEwfQ%3D%3D"
           allowFullScreen
         ></iframe>
       </div>
