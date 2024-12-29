@@ -3,43 +3,40 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { error } from "console";
 
 export default function SigninWithPassword() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState("");
+  const [typePassword, setTypePassword] = useState("password");
+  const router = useRouter();
 
-  const handleSubmit = async () => {
-    // error.preventDefault();
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(""); // Reset lỗi trước khi gửi yêu cầu
 
     try {
-      // Gửi thông tin đăng nhập tới API
-      const response = await fetch("/api/v1/auth/", {
+      const response = await fetch(`${process.env.NEXTAUTH_APP_API_URL}/auth`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
-      const data = await response.json();
-
       if (response.ok) {
-        // Đăng nhập thành công, xử lý logic
-        console.log("Đăng nhập thành công", data);
-        // Lưu token hoặc chuyển hướng trang
+        router.push("/"); // Điều hướng về trang chủ khi thành công
       } else {
-        // Xử lý lỗi nếu có
-        setErrorMessage(data.message || "Đăng nhập thất bại");
+        const errorData = await response.json();
+        setError(errorData.message || "Đăng nhập thất bại!");
       }
-    } catch (error) {
-      console.error("Lỗi kết nối:", error);
-      setErrorMessage("Có lỗi xảy ra, vui lòng thử lại!");
+    } catch (err) {
+      setError("Có lỗi xảy ra khi kết nối tới server.");
     }
   };
+  const handleShowPass = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTypePassword(e.target.checked ? "text" : "password");
+  };
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleLogin}>
       <div className="mb-4">
         <label
           htmlFor="email"
@@ -49,9 +46,11 @@ export default function SigninWithPassword() {
         </label>
         <div className="relative">
           <input
+            id="username"
+            type="text"
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
             className="w-full rounded-lg border border-stroke bg-transparent py-[15px] pl-6 pr-11 font-medium text-dark outline-none focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
-            type="text"
             placeholder="Email"
           />
 
@@ -85,8 +84,10 @@ export default function SigninWithPassword() {
         <div className="relative">
           <input
             className="w-full rounded-lg border border-stroke bg-transparent py-[15px] pl-6 pr-11 font-medium text-dark outline-none focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:bg-dark-2 dark:text-white dark:focus:border-primary"
-            type="password"
             placeholder="Password"
+            id="password"
+            type={typePassword}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
 
@@ -117,6 +118,20 @@ export default function SigninWithPassword() {
       </div>
 
       <div className="mb-6 flex items-center justify-between gap-8 py-6">
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="show-password"
+            className="cursor-pointer"
+            onChange={handleShowPass}
+          />
+          <label
+            htmlFor="show-password"
+            className="select-none font-roboto text-base font-medium text-dark dark:text-white"
+          >
+            Show password
+          </label>
+        </div>
         <Link
           href="/auth/forgot-password"
           className="select-none font-roboto text-base font-medium text-dark underline duration-300 hover:text-primary dark:text-white dark:hover:text-primary"
@@ -125,6 +140,7 @@ export default function SigninWithPassword() {
         </Link>
       </div>
 
+      {error && <p className="text-sm text-red-500">{error}</p>}
       <div className="mb-4.5">
         <button
           type="submit"

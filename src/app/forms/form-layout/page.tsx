@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import SelectGroupOne from "@/components/FormElements/SelectGroup/SelectGroupOne";
@@ -9,6 +9,8 @@ import DatePickerOne from "@/components/FormElements/DatePicker/DatePickerOne";
 import SelectGroupTelecom from "@/components/FormElements/SelectGroup/SelectGroupTelecom";
 import SelectGroupIT from "@/components/FormElements/SelectGroup/SelectGroupITSolution";
 import SelectGroupDonVi from "@/components/FormElements/SelectGroup/SelectGroupDonVi";
+import { useRouter } from "next/router";
+import { Modal, Button } from "react-bootstrap";
 
 const FormLayout = () => {
   const [category, setCategory] = useState<string>("");
@@ -17,6 +19,13 @@ const FormLayout = () => {
   const [empName, setEmpName] = useState<string>(""); // Họ tên
   const [donVi, setDonVi] = useState<string>(""); // Đơn vị
   const [empEmail, setEmpEmail] = useState<string>(""); // Email
+  const [modalShow, setModalShow] = useState(false); // Modal thành công
+  const [errorModalShow, setErrorModalShow] = useState(false); // Modal lỗi
+  const [errorMessage, setErrorMessage] = useState(""); // Thông báo lỗi từ backend
+
+  useEffect(() => {
+    require("bootstrap/dist/js/bootstrap.bundle.min.js");
+  }, []);
 
   // State để lưu dữ liệu từ các trường trong SelectGroupTelecom và SelectGroupIT
   const [telecomData, setTelecomData] = useState({});
@@ -90,9 +99,8 @@ const FormLayout = () => {
 
       const result = await response.json();
       if (response.ok) {
-        alert("Dữ liệu đã được gửi thành công!");
-        console.log("Thông tin đã gửi:", data); // In ra console những gì đã được gửi đi
-
+        // Hiển thị modal thông báo thành công
+        setModalShow(true); // Hiển thị modal thành công
         // Reset tất cả state sau khi gửi thành công
         setFileDate("");
         setIssueDate("");
@@ -124,18 +132,25 @@ const FormLayout = () => {
 
         // Reset các trường trong SelectGroupIT
         setSelectedIT(null); // Reset giá trị đã chọn trong SelectGroupIT
-      } else {
-        alert("Lỗi khi gửi dữ liệu: " + (result?.msg || "Có lỗi xảy ra!"));
+      } else if (response.status === 400) {
+        // Hiển thị modal thông báo thất bại
+        setErrorMessage(result?.msg || "Có lỗi xảy ra!"); // Lấy lỗi từ backend
+        setErrorModalShow(true); // Hiển thị modal lỗi
       }
     } catch (error) {
       console.error("Lỗi khi gửi dữ liệu:", error);
-      alert("Đã xảy ra lỗi khi gửi dữ liệu.");
-      console.log("Thông tin đã gửi:", data); // In ra console những gì đã được gửi đi
+      setErrorMessage("Đã xảy ra lỗi khi gửi dữ liệu."); // Thông báo lỗi mặc định
+      setErrorModalShow(true); // Hiển thị modal lỗi
     } finally {
-      setLoading(true);
+      setLoading(false);
     } // Dừng trạng thái loading khi đã có phản hồi
   };
 
+  // Hàm xử lý đóng modal thành công và reload trang
+  const handleCloseModal = () => {
+    setModalShow(false);
+    window.location.reload(); // Reload trang sau khi đóng modal
+  };
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Form Điền Thông Tin" />
@@ -232,6 +247,42 @@ const FormLayout = () => {
                 </button>
               </div>
             </form>
+            {/* Modal hiển thị */}
+            {/* Modal thành công */}
+            <Modal show={modalShow} onHide={handleCloseModal}>
+              <Modal.Header closeButton>
+                <Modal.Title>Nhập liệu thành công!</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>Dữ liệu của bạn đã được gửi thành công.</Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseModal}>
+                  Đóng
+                </Button>
+              </Modal.Footer>
+            </Modal>
+
+            {/* Modal thông báo lỗi */}
+            <Modal
+              show={errorModalShow}
+              onHide={() => setErrorModalShow(false)}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Lỗi khi gửi dữ liệu!</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                Đã có lỗi xảy ra khi gửi dữ liệu. Vui lòng thử lại.
+                <br />
+                <span style={{ color: "red" }}>{errorMessage}</span>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  variant="secondary"
+                  onClick={() => setErrorModalShow(false)}
+                >
+                  Đóng
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       </div>

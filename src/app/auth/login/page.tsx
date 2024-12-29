@@ -1,29 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { Metadata } from "next";
-import DefaultLayout from "@/components/Layouts/DefaultLaout";
 import Signin from "@/components/Auth/Signin";
-
-export const metadata: Metadata = {
-  title: "Next.js Login Page | NextAdmin - Next.js Dashboard Kit",
-  description: "This is Next.js Login Page NextAdmin Dashboard Kit",
-};
 
 const SignIn: React.FC = () => {
   return (
-    <DefaultLayout>
-      <Breadcrumb pageName="Sign In" />
-
+    <div className="flex h-screen items-center justify-center bg-gray-100">
       <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
         <div className="flex flex-wrap items-center">
-          <div className="w-full xl:w-1/2">
-            <div className="w-full p-4 sm:p-12.5 xl:p-15">
-              <Signin />
-            </div>
-          </div>
-
           <div className="hidden w-full p-7.5 xl:block xl:w-1/2">
             <div className="custom-gradient-1 flex flex-col items-center justify-center overflow-hidden rounded-2xl px-12.5 pt-12.5 text-center dark:!bg-dark-2 dark:bg-none">
               <Link className="mb-10 inline-block" href="/"></Link>
@@ -64,9 +48,14 @@ const SignIn: React.FC = () => {
               </div>
             </div>
           </div>
+          <div className="w-full xl:w-1/2">
+            <div className="w-full p-4 sm:p-12.5 xl:p-15">
+              <Signin />
+            </div>
+          </div>
         </div>
       </div>
-    </DefaultLayout>
+    </div>
   );
 };
 
