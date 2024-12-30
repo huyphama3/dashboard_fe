@@ -171,7 +171,7 @@ const FormLayout = () => {
                     onIssueDateChange={setIssueDate}
                   />
                 </div>
-                <div className="mb-4.5 flex flex-col gap-4.5">
+                <div className="mb-3 flex flex-col gap-4">
                   <SelectGroupName
                     label="Họ Tên"
                     options={[
@@ -222,7 +222,7 @@ const FormLayout = () => {
                   label="Email"
                   type="email"
                   placeholder="Email của bạn"
-                  customClasses="mb-4.5"
+                  customClasses="mb-4"
                   required
                   value={empEmail}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

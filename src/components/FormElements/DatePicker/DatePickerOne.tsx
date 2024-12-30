@@ -94,7 +94,10 @@ const DatePickerOne: React.FC<DatePickerProps> = ({
         </div>
       </div>
 
-      <label className="mb-3 block text-body-sm font-medium text-dark dark:text-white">
+      <label
+        className="mb-3 block text-body-sm font-medium text-dark dark:text-white"
+        style={{ marginTop: "14px" }}
+      >
         Ngày Ký Hợp Đồng
       </label>
       <div className="relative">
