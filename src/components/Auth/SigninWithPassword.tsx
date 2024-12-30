@@ -27,9 +27,10 @@ export default function SigninWithPassword() {
   }
 
   // Xử lý form khi người dùng submit
+  // Xử lý form khi người dùng submit
   const handleSubmit = async (e: FormEvent) => {
-    setLoading(true);
     e.preventDefault();
+    setLoading(true);
     console.log("check login", email, password);
 
     let newStringEmail = email;
